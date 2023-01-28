@@ -1,37 +1,58 @@
 package com.driver.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
-
 @Entity
-@Data
-@AllArgsConstructor
+@Table(name = "spots")
 public class Spot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    @Enumerated(value = EnumType.STRING)
     private SpotType spotType;
+
     private int pricePerHour;
     private boolean occupied;
-
     @ManyToOne
     @JoinColumn
     private ParkingLot parkingLot;
-
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "spot",cascade = CascadeType.ALL)
     private List<Reservation> reservationList;
 
-    public Spot(){
-        this.reservationList=new ArrayList<>();
-        this.occupied=false;
+    public Spot(int id, SpotType spotType, int pricePerHour, boolean occupied, ParkingLot parkingLot, List<Reservation> reservationList) {
+        this.id = id;
+        this.spotType = spotType;
+        this.pricePerHour = pricePerHour;
+        this.occupied = occupied;
+        this.parkingLot = parkingLot;
+        this.reservationList = reservationList;
     }
-    public Spot(Integer pricePerHour){
-        this.pricePerHour=pricePerHour;
+
+    public Spot() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public SpotType getSpotType() {
+        return spotType;
+    }
+
+    public void setSpotType(SpotType spotType) {
+        this.spotType = spotType;
+    }
+
+    public int getPricePerHour() {
+        return pricePerHour;
+    }
+
+    public void setPricePerHour(int pricePerHour) {
+        this.pricePerHour = pricePerHour;
     }
 
     public boolean getOccupied() {
@@ -40,5 +61,21 @@ public class Spot {
 
     public void setOccupied(boolean occupied) {
         this.occupied = occupied;
+    }
+
+    public ParkingLot getParkingLot() {
+        return parkingLot;
+    }
+
+    public void setParkingLot(ParkingLot parkingLot) {
+        this.parkingLot = parkingLot;
+    }
+
+    public List<Reservation> getReservationList() {
+        return reservationList;
+    }
+
+    public void setReservationList(List<Reservation> reservationList) {
+        this.reservationList = reservationList;
     }
 }

@@ -7,7 +7,7 @@ public interface ParkingLotService {
 
     void deleteSpot(int spotId);
 
-    Spot updateSpot(int parkingLotId, int spotId, int pricePerHour) throws Exception;
+    Spot updateSpot(int parkingLotId, int spotId, int pricePerHour);
 
     void deleteParkingLot(int parkingLotId);
 
