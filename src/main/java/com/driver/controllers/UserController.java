@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.driver.model.User;
 
 @RestController
 @RequestMapping("/user")
@@ -12,11 +13,13 @@ public class UserController {
     UserServiceImpl userService;
     @PostMapping("/register")
     public ResponseEntity<Void> registerUser(@RequestParam String name, @RequestParam String phoneNumber, @RequestParam String password){
+        userService.register(name,phoneNumber,password);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/update")
     public ResponseEntity<User> updatePassword(@RequestParam Integer userId, @RequestParam String password){
+        User updatedUser=userService.updatePassword(userId,password);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
